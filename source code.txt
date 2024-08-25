@@ -1,0 +1,68 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int N, T;
+
+    
+    cin >> N;
+
+    
+    int userID[102], balance[102];
+
+
+    for (int i = 0; i < N; i++) {
+        cin >> userID[i] >> balance[i];
+    }
+
+    
+    cin >> T;
+
+
+    for (int i = 0; i < T; i++) {
+        int from_userID, to_userID, amount;
+        cin >> from_userID >> to_userID >> amount;
+
+    
+        int from_index = -1, to_index = -1;
+        for (int j = 0; j < N; j++) {
+            if (userID[j] == from_userID) {
+                from_index = j;
+            }
+            if (userID[j] == to_userID) {
+                to_index = j;
+            }
+        }
+
+        
+        if (from_index != -1 && to_index != -1 && balance[from_index] >= amount) {
+            balance[from_index] -= amount;
+            balance[to_index] += amount;
+            cout << "Success" << endl;
+        } else {
+            cout << "Failure" << endl;
+        }
+    }
+
+    
+    cout << endl;
+
+    
+    for (int i = 0; i < N - 1; i++) {
+        for (int j = i + 1; j < N; j++) {
+            if (balance[i] > balance[j]) {
+                swap(balance[i], balance[j]);
+                swap(userID[i], userID[j]);
+            }
+        }
+    }
+
+
+    for (int i = 0; i < N; i++) {
+        cout << userID[i] << " " << balance[i] << endl;
+    }
+
+    return 0;
+}
